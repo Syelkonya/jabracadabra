@@ -17,6 +17,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.13") // реализация slf4j
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.test {
