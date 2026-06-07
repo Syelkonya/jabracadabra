@@ -1,0 +1,29 @@
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.log
+hs_err_pid*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.env.local
