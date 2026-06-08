@@ -1,7 +1,11 @@
 package su.syelkonya;
 
-import java.util.*;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.*;
+import java.util.stream.Stream;
+
+@Slf4j
 public class CollectionUtils {
 
     /**
@@ -61,6 +65,23 @@ public class CollectionUtils {
             top3.add(entries.get(i).getKey());
         }
         return top3;
+    }
+
+    public static List<Integer> quickSort(List<Integer> list) {
+        if (list.size() < 2) return list;
+
+        int pivot = list.get(list.size() / 2);
+
+        List<Integer> left = list.stream().filter(x -> x < pivot).toList();
+        List<Integer> middle = list.stream().filter(x -> x == pivot).toList();
+        List<Integer> right = list.stream().filter(x -> x > pivot).toList();
+
+        return Stream.concat(
+                Stream.concat(
+                        quickSort(left).stream(),
+                        middle.stream()),
+                quickSort(right).stream()
+        ).toList();
     }
 
 }

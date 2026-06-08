@@ -92,4 +92,29 @@ class CollectionUtilsTest {
     }
 
 
+    static Stream<Arguments> provideQuickSort() {
+        return Stream.of(
+                Arguments.of(List.of(5, 3, 1, 4, 2),        List.of(1, 2, 3, 4, 5)),
+                Arguments.of(List.of(1, 2, 3, 4, 5),        List.of(1, 2, 3, 4, 5)),
+                Arguments.of(List.of(5, 4, 3, 2, 1),        List.of(1, 2, 3, 4, 5)),
+                Arguments.of(List.of(1),                     List.of(1)),
+                Arguments.of(List.of(),                      List.of()),
+                Arguments.of(List.of(3, 3, 3),               List.of(3, 3, 3)),
+                Arguments.of(List.of(3, 1, 3, 2, 1),        List.of(1, 1, 2, 3, 3)),
+                Arguments.of(List.of(-3, -1, -5, 0, 2),     List.of(-5, -3, -1, 0, 2))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideQuickSort")
+    void quickSort(List<Integer> input, List<Integer> expected) {
+        assertEquals(expected, CollectionUtils.quickSort(input));
+    }
+
+    @ParameterizedTest
+    @NullSource
+    void quickSortNullThrowsException(List<Integer> input) {
+        assertThrows(NullPointerException.class, () -> CollectionUtils.quickSort(input));
+    }
+
 }
