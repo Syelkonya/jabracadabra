@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -51,6 +52,43 @@ class CollectionUtilsTest {
     @MethodSource("provideMergeSorted")
     void mergeSorted(List<Integer> a, List<Integer> b, List<Integer> expected) {
         assertEquals(expected, CollectionUtils.mergeSorted(a, b));
+    }
+
+    static Stream<Arguments> provideWordFrequency() {
+        return Stream.of(
+                Arguments.of(
+                        "a a a b b c",
+                        List.of("a", "b", "c")
+                ),
+                Arguments.of(
+                        "dog dog dog cat cat bird",
+                        List.of("dog", "cat", "bird")
+                ),
+                Arguments.of(
+                        "hello",
+                        List.of("hello")
+                ),
+                Arguments.of(
+                        "a a a a a a",
+                        List.of("a")
+                ),
+                Arguments.of(
+                        "apple apple apple banana banana cherry cherry mango mango mango mango kiwi kiwi kiwi kiwi kiwi",
+                        List.of("kiwi", "mango", "apple")
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideWordFrequency")
+    void wordFrequency(String input, List<String> expected) {
+        assertEquals(expected, new ArrayList<>(CollectionUtils.wordFrequency(input)));
+    }
+
+    @ParameterizedTest
+    @NullSource
+    void wordFrequencyNullThrowsException(String input) {
+        assertThrows(NullPointerException.class, () -> CollectionUtils.wordFrequency(input));
     }
 
 

@@ -1,7 +1,6 @@
 package su.syelkonya;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CollectionUtils {
 
@@ -13,7 +12,9 @@ public class CollectionUtils {
         return list.stream().distinct().toList();
     }
 
-    //Метод mergeSorted(List a, List b) - слить два отсортированных списка в один отсортированный.
+    /**
+     * Метод mergeSorted(List a, List b) - слить два отсортированных списка в один отсортированный.
+     */
     public static List<Integer> mergeSorted(List<Integer> a, List<Integer> b) {
         List<Integer> resultList = new ArrayList<>();
         for (int k = 0, l = 0; k < a.size() || l < b.size(); ) {
@@ -36,6 +37,30 @@ public class CollectionUtils {
             }
         }
         return resultList;
+    }
+
+    /**
+     * Метод wordFrequency(String text) - вывести топ-3 самых частых слова в строке.
+     */
+    public static List<String> wordFrequency(String text) {
+        List<String> textList = List.of(text.split(" "));
+        HashMap<String, Integer> wordFrequency = new HashMap<>();
+        for (String word : textList) {
+            int currentFrequency = wordFrequency.getOrDefault(word, 0) + 1;
+            wordFrequency.put(word, currentFrequency);
+        }
+        List<Map.Entry<String, Integer>> entries = new ArrayList<>(wordFrequency.entrySet());
+
+        entries.sort(
+                (a, b) ->
+                        b.getValue() - a.getValue()
+        );
+
+        List<String> top3 = new ArrayList<>();
+        for (int i = 0; i < Math.min(3, entries.size()); i++) {
+            top3.add(entries.get(i).getKey());
+        }
+        return top3;
     }
 
 }
