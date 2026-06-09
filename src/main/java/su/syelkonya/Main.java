@@ -3,11 +3,17 @@ package su.syelkonya;
 
 import lombok.extern.slf4j.Slf4j;
 
+import static su.syelkonya.StringUtils.joinWithBuilder;
+import static su.syelkonya.StringUtils.joinWithPlus;
+
 @Slf4j
 public class Main {
 
     void main(){
         log.info("hello");
+
+        joinWithPlus();
+        joinWithBuilder();
 
 
         PhoneBook phoneBook = new PhoneBook();

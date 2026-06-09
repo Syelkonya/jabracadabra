@@ -1,7 +1,10 @@
 package su.syelkonya;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.LinkedHashMap;
 
+@Slf4j
 public class StringUtils {
 
     public static String reverse(String line) {
@@ -35,6 +38,31 @@ public class StringUtils {
             map.put(ch, map.getOrDefault(ch, 0) + 1);
         }
         return map.toString();
+    }
+
+//    8. Сборка отчета из 100 000 строк двумя способами: метод joinWithPlus (через += в цикле)
+//    и joinWithBuilder (через StringBuilder.append). Замерь время каждого через System.currentTimeMillis и сравни.
+    public static void joinWithPlus(){
+        long start = System.currentTimeMillis();
+
+        String a = "a";
+        for (int i = 0; i <= 100_000; i++){
+            a+="a";
+        }
+
+        long end = System.currentTimeMillis();
+        log.info("Время выполнения joinWithPlus: {} мс", end - start);
+    }
+    public static void joinWithBuilder(){
+        long start = System.currentTimeMillis();
+
+        StringBuilder sb = new StringBuilder("a");
+        for (int i = 0; i <= 100_000; i++){
+            sb.append("a");
+        }
+
+        long end = System.currentTimeMillis();
+        log.info("Время выполнения joinWithBuilder: {} мс", end - start);
     }
 
 }
