@@ -38,6 +38,8 @@ public class Main {
 
         phoneBook.removeNumber("Петр", "+79990000000");
         log.info("Удаление несуществующего: ок");
+
+
     }
 
 
