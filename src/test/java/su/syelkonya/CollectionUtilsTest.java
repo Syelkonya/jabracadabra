@@ -117,4 +117,21 @@ class CollectionUtilsTest {
         assertThrows(NullPointerException.class, () -> CollectionUtils.quickSort(input));
     }
 
+    static Stream<Arguments> provideMaskPhone() {
+        return Stream.of(
+                Arguments.of("+7999123456",     "+7999***3456"),
+                Arguments.of("+79991234567",    "+7999***4567"),
+                Arguments.of("123456789",       "12345***6789"),
+                Arguments.of("12345678",        "12345678"),
+                Arguments.of("1",              "1"),
+                Arguments.of("",               "")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideMaskPhone")
+    void maskPhone(String input, String expected) {
+        assertEquals(expected, CollectionUtils.maskPhone(input));
+    }
+
 }

@@ -84,4 +84,15 @@ public class CollectionUtils {
         ).toList();
     }
 
+    //    Метод maskPhone(String phone) - скрыть середину номера: видны первые 5 символов и последние 4, между ними три звездочки.
+//    Если строка короче 9 символов - вернуть как есть.
+    public static String maskPhone(String phone) {
+        if (phone.length() < 9) return phone;
+        StringBuilder stringBuilderLeft = new StringBuilder(phone);
+        StringBuilder stringBuilderRight = new StringBuilder(phone);
+        stringBuilderLeft.delete(5, phone.length());
+        stringBuilderRight.delete(0, phone.length() - 4);
+        return stringBuilderLeft.append("***").append(stringBuilderRight).toString();
+    }
+
 }
