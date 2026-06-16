@@ -35,4 +35,12 @@ public class StreamUtils {
                 .collect(Collectors.toSet());
     }
 
+//   Реализовать метод, который принимает список Integer b после сортировки по убыванию возвращает 4 по порядку число.
+    public int getFourthAfterDescSort(List<Integer> b){
+        return b.stream()
+                .sorted((a1, a2) -> (a2 - a1))
+                .toList()
+                .get(3);
+    }
+
 }
