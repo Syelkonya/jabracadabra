@@ -31,4 +31,12 @@ public class AgregatorCompanyUtils {
                 );
     }
 
+//     Используем класс сотрудника, метод принимает список сотрудников, отдает имена всех сотрудников одной строкой через запятую.
+    public String getOneLineNames(List<Employee> employees){
+        return employees
+                .stream()
+                .map(Employee::getName)
+                .collect(Collectors.joining(", "));
+    }
+
 }
