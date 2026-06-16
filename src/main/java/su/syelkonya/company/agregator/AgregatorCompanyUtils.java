@@ -47,5 +47,11 @@ public class AgregatorCompanyUtils {
                 .anyMatch(a -> a > 50);
     }
 
+//    Используем класс сотрудника, метод принимает список сотрудников, вернуть первого сотрудника из фирмы X.
+    public Employee getFirstFromXCompany(List<Employee> employees, String x){
+        return employees.stream()
+                .filter(e -> e.getCompany().equals(x))
+                .findFirst().orElseThrow();
+    }
 
 }
