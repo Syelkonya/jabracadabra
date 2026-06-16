@@ -1,0 +1,68 @@
+package su.syelkonya;
+
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.LinkedHashMap;
+
+@Slf4j
+public class StringUtils {
+
+    public static String reverse(String line) {
+        char[] lineArray = line.toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = lineArray.length - 1; i >= 0; i--) {
+            stringBuilder.append(lineArray[i]);
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Метод isPalindrome(String s) - палиндром без учета регистра и пробелов.
+     * "А роза упала на лапу Азора" дает true.
+     */
+    public static boolean isPalindrome(String line) {
+        if (line == null) return false;
+        String lineAfterFormatting = line.toLowerCase().replace(" ", "");
+        String reverseLineAfterFormatting = reverse(lineAfterFormatting);
+        return lineAfterFormatting.equals(reverseLineAfterFormatting);
+    }
+
+
+    /**
+     * Метод countChars(String s) -
+     * countChars("hello") дает {h=1, e=1, l=2, o=1}.
+     */
+    public static String countChars(String line){
+        LinkedHashMap<Character, Integer> map = new LinkedHashMap<>();
+        for (char ch: line.toCharArray()){
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+        return map.toString();
+    }
+
+//    8. Сборка отчета из 100 000 строк двумя способами: метод joinWithPlus (через += в цикле)
+//    и joinWithBuilder (через StringBuilder.append). Замерь время каждого через System.currentTimeMillis и сравни.
+    public static void joinWithPlus(){
+        long start = System.currentTimeMillis();
+
+        String a = "a";
+        for (int i = 0; i <= 100_000; i++){
+            a+="a";
+        }
+
+        long end = System.currentTimeMillis();
+        log.info("Время выполнения joinWithPlus: {} мс", end - start);
+    }
+    public static void joinWithBuilder(){
+        long start = System.currentTimeMillis();
+
+        StringBuilder sb = new StringBuilder("a");
+        for (int i = 0; i <= 100_000; i++){
+            sb.append("a");
+        }
+
+        long end = System.currentTimeMillis();
+        log.info("Время выполнения joinWithBuilder: {} мс", end - start);
+    }
+
+}
