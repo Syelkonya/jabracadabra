@@ -24,6 +24,6 @@ class StreamUtilsTest {
     @ParameterizedTest
     @MethodSource("provideEven")
     void removeDuplicates(List<Integer> input, int expected) {
-        assertEquals(expected, new StreamUtils().returnOnlyEvenNumbers(input));
+        assertEquals(expected, new StreamUtils().returnEvenNumbersCount(input));
     }
 }
