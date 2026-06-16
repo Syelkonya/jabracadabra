@@ -39,4 +39,13 @@ public class AgregatorCompanyUtils {
                 .collect(Collectors.joining(", "));
     }
 
+//     Используем класс сотрудника, метод принимает список сотрудников, вернуть true если есть хоть один старше 50 лет.
+    public boolean isAnyOlderThan50(List<Employee> employees){
+        return employees
+                .stream()
+                .map(Employee::getAge)
+                .anyMatch(a -> a > 50);
+    }
+
+
 }
