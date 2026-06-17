@@ -17,7 +17,8 @@ class StreamUtilsTest {
                 Arguments.of(List.of(3, 4, 3, 2, 1), 6),
                 Arguments.of(List.of(1, 2, 3), 2),
                 Arguments.of(List.of(1, 1, 1), 0),
-                Arguments.of(List.of(1), 0)
+                Arguments.of(List.of(1), 0),
+                Arguments.of(List.of(), 0)
         );
     }
 
@@ -25,5 +26,31 @@ class StreamUtilsTest {
     @MethodSource("provideEven")
     void removeDuplicates(List<Integer> input, int expected) {
         assertEquals(expected, new StreamUtils().returnEvenNumbersCount(input));
+    }
+
+    static Stream<Arguments> provideCountLinesLongerThan() {
+        return Stream.of(
+                Arguments.of(List.of("asdaa", "asdaa", "asdaa", "asdaa", "asdaa"),
+                        4,
+                        5
+                ),
+                Arguments.of(List.of("asdaa", "asda", "asdaa", "asda", "asda"),
+                        4,
+                        2
+                ), Arguments.of(List.of("", "", "", "", ""),
+                        0,
+                        0
+                ), Arguments.of(List.of("asdaa", "asdaa", "asdaa", "asdaa", "asdaa"),
+                        0,
+                        5
+                ),
+                Arguments.of(List.of(), 5, 0)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideCountLinesLongerThan")
+    void provideCountLinesLongerThanTest(List<String> input, int symbols, int expectedLines) {
+        assertEquals(expectedLines, new StreamUtils().countLinesLongerThan(input, symbols));
     }
 }

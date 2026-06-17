@@ -1,6 +1,7 @@
 package su.syelkonya;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,6 +42,13 @@ public class StreamUtils {
                 .sorted((a1, a2) -> (a2 - a1))
                 .toList()
                 .get(3);
+    }
+
+//    10) Дан List<List<Integer>> - собрать 1 список всех чисел.
+    public List<Integer> getListFromListOfLists(List<List<Integer>> listList){
+        return listList.stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 }
