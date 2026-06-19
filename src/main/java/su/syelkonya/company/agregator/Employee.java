@@ -1,5 +1,6 @@
 package su.syelkonya.company.agregator;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
  * Реализовать метод, который принимает список сотрудников и отдает среднюю зп по каждой фирме (вернуть Map<String, BigDecimal>)
  */
 @Data
+@AllArgsConstructor
 public class Employee {
 
     private String name;
@@ -16,4 +18,7 @@ public class Employee {
     private BigDecimal salary;
     private String company;
 
+    public Employee(String name) {
+        this.name = name;
+    }
 }

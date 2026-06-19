@@ -53,4 +53,36 @@ class StreamUtilsTest {
     void provideCountLinesLongerThanTest(List<String> input, int symbols, int expectedLines) {
         assertEquals(expectedLines, new StreamUtils().countLinesLongerThan(input, symbols));
     }
+
+    static Stream<Arguments> provideGetListFromListOfLists() {
+        return Stream.of(
+                Arguments.of(List.of(
+                        List.of(1, 2, 3),
+                        List.of(5, 2, 5)
+                        ),
+                       List.of(1,2,3,5,2,5)
+                ),
+                Arguments.of(List.of(
+                                List.of(1, 2, 3),
+                                List.of(),
+                                List.of(5, 2, 5)
+                        ),
+                        List.of(1,2,3,5,2,5)
+                ),
+                Arguments.of(List.of(
+                                List.of(),
+                                List.of(),
+                                List.of()
+                        ),
+                        List.of()
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideGetListFromListOfLists")
+    void getListFromListOfListsTest(List<List<Integer>> input, List<Integer> expectedLines) {
+        StreamUtils streamUtils = new StreamUtils();
+        assertEquals(expectedLines,streamUtils.getListFromListOfLists(input));
+    }
 }
