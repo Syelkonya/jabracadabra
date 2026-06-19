@@ -1,10 +1,17 @@
 package su.syelkonya;
 
+import lombok.SneakyThrows;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StreamUtils {
 
@@ -36,19 +43,31 @@ public class StreamUtils {
                 .collect(Collectors.toSet());
     }
 
-//   Реализовать метод, который принимает список Integer b после сортировки по убыванию возвращает 4 по порядку число.
-    public int getFourthAfterDescSort(List<Integer> b){
+    //   Реализовать метод, который принимает список Integer b после сортировки по убыванию возвращает 4 по порядку число.
+    public int getFourthAfterDescSort(List<Integer> b) {
         return b.stream()
                 .sorted((a1, a2) -> (a2 - a1))
                 .toList()
                 .get(3);
     }
 
-//    10) Дан List<List<Integer>> - собрать 1 список всех чисел.
-    public List<Integer> getListFromListOfLists(List<List<Integer>> listList){
+    //    10) Дан List<List<Integer>> - собрать 1 список всех чисел.
+    public List<Integer> getListFromListOfLists(List<List<Integer>> listList) {
         return listList.stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @SneakyThrows
+    public int countNonEmptyLines(String filePath) {
+        Path path = Paths.get(filePath);
+        long count;
+        try (Stream<String> lines = Files.lines(path)) {
+            count = lines
+                    .filter(l -> !l.isBlank())
+                    .count();
+        }
+        return (int) count;
     }
 
 }
