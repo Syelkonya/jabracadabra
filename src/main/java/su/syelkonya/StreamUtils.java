@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,8 +26,8 @@ public class StreamUtils {
     }
 
     //  Реализовать метод, который возвращает кол-во строк в списке длиннее n символов.
-    public int countLinesLongerThan(List<String> lines, int n) {
-        return (int) lines.stream()
+    public long countLinesLongerThan(List<String> lines, int n) {
+        return lines.stream()
                 .filter(l -> l.length() > n)
                 .count();
     }
@@ -38,6 +35,7 @@ public class StreamUtils {
     //    Реализовать метод, который возвращает set первых букв каждого слова из списка.
     public Set<Character> firstLetterSet(List<String> words) {
         return words.stream()
+                .filter(Objects::nonNull)
                 .filter(w -> !w.isEmpty())
                 .map(w -> w.charAt(0))
                 .collect(Collectors.toSet());
@@ -46,7 +44,7 @@ public class StreamUtils {
     //   Реализовать метод, который принимает список Integer b после сортировки по убыванию возвращает 4 по порядку число.
     public int getFourthAfterDescSort(List<Integer> b) {
         return b.stream()
-                .sorted((a1, a2) -> (a2 - a1))
+                .sorted(Comparator.reverseOrder())
                 .toList()
                 .get(3);
     }
