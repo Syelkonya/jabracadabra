@@ -1,7 +1,5 @@
 package su.syelkonya;
 
-import lombok.SneakyThrows;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,8 +54,7 @@ public class StreamUtils {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    @SneakyThrows
-    public int countNonEmptyLines(String filePath) {
+    public int countNonEmptyLines(String filePath) throws IOException {
         Path path = Paths.get(filePath);
         long count;
         try (Stream<String> lines = Files.lines(path)) {
