@@ -17,7 +17,9 @@ public class PollingWorker {
             while (running) {
                 try {
                     Thread.sleep(100);
+                    if (running){
                     log.info("tic");
+                    }
                 } catch (InterruptedException _) {
                     Thread.currentThread().interrupt();
                     break;
@@ -30,6 +32,7 @@ public class PollingWorker {
 
     void stop() throws InterruptedException {
         running = false;
+        thread.interrupt();
         thread.join();
     }
 }
