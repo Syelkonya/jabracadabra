@@ -1,6 +1,5 @@
 package su.syelkonya.concurrency;
 
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class CollectionUtils {

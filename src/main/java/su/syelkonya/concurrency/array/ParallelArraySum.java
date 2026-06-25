@@ -7,6 +7,11 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 7) Раздели массив на K частей, K потоков считают частичную сумму своей части,
+ * на барьере сводят в общий итог, печатают;
+ * для демонстрации переиспользования повтори на втором массиве.
+ */
 @Slf4j
 public class ParallelArraySum {
     private final int k;
