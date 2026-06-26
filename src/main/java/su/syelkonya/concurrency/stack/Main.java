@@ -13,26 +13,26 @@ public class Main {
         Stack<Integer> stack = new Stack<>();
 
         // Заполняем стек заранее
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100000; i++) {
             stack.push(i);
         }
 
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
         // 5 потоков одновременно делают push
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 500; i++) {
             final int threadId = i;
             executor.submit(() -> {
-                for (int j = 0; j < 10; j++) {
-                    stack.push(threadId * 100 + j);
+                for (int j = 0; j < 100; j++) {
+                    stack.push(threadId * 1000 + j);
                 }
             });
         }
 
         // 5 потоков одновременно делают pop
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 50; i++) {
             executor.submit(() -> {
-                for (int j = 0; j < 10; j++) {
+                for (int j = 0; j < 1000; j++) {
                     stack.pop();
                 }
             });

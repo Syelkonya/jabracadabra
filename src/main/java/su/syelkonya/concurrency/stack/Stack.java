@@ -11,32 +11,30 @@ public class Stack<T> {
     AtomicReference<Node<T>> currentNodeAtomicReference = new AtomicReference<>(null);
 
     void push(T value) {
-        if (currentNodeAtomicReference.get() == null) {
-            currentNodeAtomicReference.compareAndSet(null, new Node<>(value, null));
-        } else {
-            currentNodeAtomicReference.compareAndSet(
-                    currentNodeAtomicReference.get(),
-                    new Node<>(value, currentNodeAtomicReference.get())
-            );
+        while (true) {
+            Node<T> current = currentNodeAtomicReference.get();
+            Node<T> newNode = new Node<>(value, current);
+            if (currentNodeAtomicReference.compareAndSet(current, newNode)) {
+//                log.info("Add Node with Value {}", value);
+                break;
+            }
+            log.info("COMPARE AND SET - FALSE IN PUSH {} - {}", current.value, newNode.value);
         }
-        log.info("Add Node with Value {}", value);
     }
 
     T pop() {
-        if (currentNodeAtomicReference.get() == null) {
-            log.info("NO NODES In Stack");
-        }
-        if (currentNodeAtomicReference.get().next == null) {
-            log.info("Take our last node in stack");
-            AtomicReference<Node<T>> returnNode = currentNodeAtomicReference;
-            currentNodeAtomicReference.compareAndSet(currentNodeAtomicReference.get(), null);
-            log.info("Return Node with value {}", returnNode.get().value);
-            return returnNode.get().value;
-        } else {
-            AtomicReference<Node<T>> returnNode = currentNodeAtomicReference;
-            currentNodeAtomicReference.compareAndSet(currentNodeAtomicReference.get(), currentNodeAtomicReference.get().next);
-            log.info("Return Node with value {}", returnNode.get().value);
-            return returnNode.get().value;
+        while (true) {
+            Node<T> current = currentNodeAtomicReference.get();
+            if (current == null) {
+//                log.info("NO NODES In Stack");
+                return null;
+            }
+            Node<T> next = current.next;
+            if (currentNodeAtomicReference.compareAndSet(current, next)) {
+//                log.info("Return Node with value {}", current.value);
+                return current.value;
+            }
+            log.info("COMPARE AND SET - FALSE IN POP {} - {}", current.value, next.value);
         }
     }
 
