@@ -2,10 +2,7 @@ package su.syelkonya.concurrency.array;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * 7) Раздели массив на K частей, K потоков считают частичную сумму своей части,
@@ -23,7 +20,7 @@ public class ParallelArraySum {
     public ParallelArraySum(int k) {
         this.k = k;
         this.partialSums = new long[k];
-        this.executor = Executors.newVirtualThreadPerTaskExecutor();
+        this.executor = Executors.newFixedThreadPool(k);
         this.barrier = new CyclicBarrier(k, () -> {
             log.info("Begin of Barrier");
             totalSum = 0;
@@ -34,7 +31,7 @@ public class ParallelArraySum {
         });
     }
 
-    public void calculate(int[] array) {
+    public void calculate(int[] array)  {
         int chunkSize = array.length / k;
 
         for (int i = 0; i < k; i++) {
@@ -55,8 +52,9 @@ public class ParallelArraySum {
                 try {
                     log.info("Thread №{} is waiting other", threadId);
                     barrier.await(); // ждём остальных
-                } catch (InterruptedException _) {
+                } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
+                    log.error("Interrupted exception ", e);
                 } catch (BrokenBarrierException e) {
                     log.error("Barier exception ", e);
                 }
@@ -66,5 +64,11 @@ public class ParallelArraySum {
 
     public void shutdown() {
         executor.shutdown();
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Interrupted exception ", e);
+        }
     }
 }

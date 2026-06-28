@@ -1,5 +1,6 @@
 plugins {
     java
+    id("org.jetbrains.kotlin.jvm") version "2.0.0" apply false
 }
 
 group = "su.syelkonya"
@@ -10,8 +11,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.projectlombok:lombok:1.18.38")
-    annotationProcessor("org.projectlombok:lombok:1.18.38")
+    compileOnly("org.projectlombok:lombok:1.18.46")
+    annotationProcessor("org.projectlombok:lombok:1.18.46")
 
     implementation("org.slf4j:slf4j-api:2.0.16")
     implementation("ch.qos.logback:logback-classic:1.5.13") // реализация slf4j
