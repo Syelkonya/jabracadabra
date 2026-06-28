@@ -31,8 +31,9 @@ public class ParallelArraySum {
         });
     }
 
-    public void calculate(int[] array)  {
+    public void calculate(int[] array) {
         int chunkSize = array.length / k;
+        CountDownLatch countDownLatch = new CountDownLatch(k);
 
         for (int i = 0; i < k; i++) {
             final int index = i;
@@ -57,8 +58,16 @@ public class ParallelArraySum {
                     log.error("Interrupted exception ", e);
                 } catch (BrokenBarrierException e) {
                     log.error("Barier exception ", e);
+                } finally {
+                    countDownLatch.countDown();
                 }
             });
+        }
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Interrupted exception ", e);
         }
     }
 
